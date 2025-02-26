@@ -1,47 +1,53 @@
+import kotlinx.serialization.InternalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-@Serializable
+@InternalSerializationApi @Serializable
 data class MyDataResponse(
     val help: String,
     val success: Boolean,
     val result: Result
 )
 
-@Serializable
+@InternalSerializationApi @Serializable
 data class Result(
-    @SerialName("resource_id") val resourceId: String,
-    val fields: List<Field>,
-    val records: List<Record>,
-    @SerialName("_links") val links: Links,
     val filters: Filters,
-    val total: Int
+    @SerialName("include_total") val includeTotal: Boolean,
+    val limit: Int,
+    @SerialName("records_format") val recordsFormat: String,
+    @SerialName("resource_id") val resourceId: String,
+    @SerialName("total_estimation_threshold") val totalEstimationThreshold: String?,
+    val records: List<Record>,
+    val fields: List<Field>,
+    @SerialName("_links") val links: Links,
+    val total: Int,
+    @SerialName("total_was_estimated") val totalWasEstimated: Boolean
 )
 
-@Serializable
+@InternalSerializationApi @Serializable
 data class Field(
-    val type: String,
-    val id: String
+    val id: String,
+    val type: String
 )
 
-@Serializable
+@InternalSerializationApi @Serializable
 data class Record(
-    val HOMES: String,
-    @SerialName("CODI_ENS") val codiEns: String,
     @SerialName("_id") val id: Int,
-    val DONES: String,
-    @SerialName("NOM_ENS") val nomEns: String,
-    val TOTAL: String,
-    val ANY: String
+    val ANY: Int,
+    val HOMES: Int,
+    val DONES: Int,
+    val TOTAL: Int,
+    @SerialName("CODI_ENS") val codiEns: Long,
+    @SerialName("NOM_ENS") val nomEns: String
 )
 
-@Serializable
+@InternalSerializationApi @Serializable
 data class Links(
     val start: String,
     val next: String
 )
 
-@Serializable
+@InternalSerializationApi @Serializable
 data class Filters(
     @SerialName("CODI_ENS") val codiEns: String
 )

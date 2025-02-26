@@ -9,6 +9,7 @@ import androidx.lifecycle.viewModelScope
 import cat.dam.andy.retrofit_graph_compose.network.MyApi
 import cat.dam.andy.retrofit_graph_compose.model.MyDataProcessor
 import kotlinx.coroutines.launch
+import kotlinx.serialization.InternalSerializationApi
 import retrofit2.HttpException
 import java.io.IOException
 
@@ -23,7 +24,7 @@ sealed interface MyUiState {
         val totalMaleEvolution: List<Pair<String, Int>>
     ) : MyUiState
 
-    data class Error(val errorMessage: String? = null) : MyUiState
+    data class Error(val errorMessage: String?) : MyUiState
     object Loading : MyUiState
 }
 
@@ -50,6 +51,7 @@ class MyViewModel : ViewModel() {
      * Gets information from the API Retrofit service and updates the
      * [MyDataModel] [List] [MutableList].
      */
+    @OptIn(InternalSerializationApi::class)
     fun getMyData() {
         viewModelScope.launch {
             myUiState = MyUiState.Loading
